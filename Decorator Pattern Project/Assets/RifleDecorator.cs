@@ -15,12 +15,26 @@ abstract public class RifleDecorator : IRifle
     {
         return m_DecoratedRifle.GetAccuracy();
     }
+
+    public virtual GameObject GetGameObject()
+    {
+        return m_DecoratedRifle.GetGameObject();
+    }
 }
 
 public class WithScope : RifleDecorator
 {
     float m_ScopeAccuracy = 20.0f;
-    public WithScope(IRifle rifle) : base(rifle) { }
+    string prefabPath = "Scope";
+    GameObject model; // instantiated prefab
+
+    public WithScope(IRifle rifle) : base(rifle)
+    {
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        model = GameObject.Instantiate(prefab);
+        model.transform.SetParent(GetGameObject().transform);
+        model.transform.position += model.transform.parent.position;
+    }
 
     public override float GetAccuracy()
     {
@@ -31,7 +45,16 @@ public class WithScope : RifleDecorator
 public class WithStabilizer : RifleDecorator
 {
     float m_StabilizerAccuracy = 10.0f;
-    public WithStabilizer(IRifle rifle) : base(rifle) { }
+    string prefabPath = "Stabilizer";
+    GameObject model; // instantiated prefab
+
+    public WithStabilizer(IRifle rifle) : base(rifle)
+    {
+        GameObject prefab = Resources.Load<GameObject>(prefabPath);
+        model = GameObject.Instantiate(prefab);
+        model.transform.SetParent(GetGameObject().transform);
+        model.transform.position += model.transform.parent.position;
+    }
 
     public override float GetAccuracy()
     {

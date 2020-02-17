@@ -5,4 +5,5 @@ using UnityEngine;
 public interface IRifle
 {
     float GetAccuracy();
+    GameObject GetGameObject();
 }
