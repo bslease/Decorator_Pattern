@@ -21,7 +21,7 @@ public class BasicRifle : IRifle
     public BasicRifle()
     {
         GameObject prefab = Resources.Load<GameObject>(prefabPath);
-        model = GameObject.Instantiate(model);
+        model = GameObject.Instantiate(prefab);
     }
 
     public BasicRifle(Vector3 worldPos)
